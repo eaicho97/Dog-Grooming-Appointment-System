@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: david
+      MYSQL_PASSWORD: david123
+
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - spring-boot-mysql-network
+
+  springboot-app:
+    build: .
+    container_name: springboot-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/mydb
+      SPRING_DATASOURCE_USERNAME: david
+      SPRING_DATASOURCE_PASSWORD: david123
+    networks:
+      - spring-boot-mysql-network
+
+networks:
+  spring-boot-mysql-network:
+
+volumes:
+  db_data:
