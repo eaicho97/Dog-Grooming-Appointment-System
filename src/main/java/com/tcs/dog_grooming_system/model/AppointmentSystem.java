@@ -1,9 +1,6 @@
 package com.tcs.dog_grooming_system.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class AppointmentSystem {
@@ -13,9 +10,10 @@ public class AppointmentSystem {
 
     private Long id;
     private String dogsName;
-    private Long ownersNumber;
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private Owner owner;
     private String bathType;
-
 
     public Long getId() {
         return id;
@@ -33,12 +31,12 @@ public class AppointmentSystem {
         this.dogsName = dogsName;
     }
 
-    public Long getOwnersNumber() {
-        return ownersNumber;
+    public Owner getOwner() {
+        return owner;
     }
 
-    public void setOwnersNumber(Long ownersNumber) {
-        this.ownersNumber = ownersNumber;
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public String getBathType() {
@@ -49,3 +47,4 @@ public class AppointmentSystem {
         this.bathType = bathType;
     }
 }
+

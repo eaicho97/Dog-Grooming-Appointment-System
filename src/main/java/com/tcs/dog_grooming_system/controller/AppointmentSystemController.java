@@ -17,8 +17,8 @@ public class AppointmentSystemController {
     private AppointmentSystemService appointmentSystemService;
 
     @PostMapping
-    public ResponseEntity<AppointmentSystem> createAppointment(@RequestBody AppointmentSystem dogsName) {
-        return new ResponseEntity<>(appointmentSystemService.saveNameDog(dogsName), HttpStatus.CREATED);
+    public ResponseEntity<AppointmentSystem> createAppointment(@RequestBody AppointmentSystem appointment) {
+        return new ResponseEntity<>(appointmentSystemService.saveAppointment(appointment), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -37,7 +37,7 @@ public class AppointmentSystemController {
     public ResponseEntity<AppointmentSystem> updateDog(@PathVariable Long id, @RequestBody AppointmentSystem updateDog) {
         return appointmentSystemService.getDogById(id).map(existingDog -> {
                     existingDog.setDogsName((updateDog.getDogsName()));
-                    existingDog.setOwnersNumber(updateDog.getOwnersNumber());
+                    existingDog.setOwner(updateDog.getOwner());
                     existingDog.setBathType(updateDog.getBathType());
                     return new ResponseEntity<>(appointmentSystemService.saveNameDog(existingDog), HttpStatus.OK);
                 })
@@ -49,6 +49,4 @@ public class AppointmentSystemController {
         appointmentSystemService.deleteName(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
 }
